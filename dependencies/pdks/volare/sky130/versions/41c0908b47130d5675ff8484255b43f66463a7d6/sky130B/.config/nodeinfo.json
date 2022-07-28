@@ -1,0 +1,46 @@
+{
+    "foundry": "SW",
+    "foundry-name": "SkyWater",
+    "node": "sky130B",
+    "feature-size": "130nm",
+    "status": "active",
+    "description": "Skywater 0.13um CMOS, local interconntect + high-resistance poly + 5 metal layer backend stack + MiM caps + redistribution layer + ReRAM",
+    "options": [
+        "METAL5",
+        "MIM",
+        "RERAM",
+        "REDISTRIBUTION"
+    ],
+    "stdcells": {
+	"sky130_fd_sc_hd": "@:libraries/sky130_fd_sc_hd/latest",
+	"sky130_fd_sc_hdll": "unknown",
+	"sky130_fd_sc_hs": "unknown",
+	"sky130_fd_sc_hvl": "@:libraries/sky130_fd_sc_hvl/latest",
+	"sky130_fd_sc_lp": "unknown",
+	"sky130_fd_sc_ls": "unknown",
+	"sky130_fd_sc_ms": "unknown",
+	"sky130_osu_sc_t12": "unknown",
+	"sky130_osu_sc_t15": "unknown",
+	"sky130_osu_sc_t18": "unknown"
+    },
+    "iocells": {
+        "sky130_fd_io": "@:libraries/sky130_fd_io/latest"
+    },
+    "primitive": {
+	"sky130_fd_pr": "@:libraries/sky130_fd_pr/latest"
+    },
+    "memory": {
+	"sky130_sram_macros": "c2333394e0b0b9d9d71185678a8d8087715d5e3b"
+    },
+    "other": {
+	"sky130_ml_xx_hd": "6eb3b0718552b034f1bf1870285ff135e3fb2dcb"
+    },
+    "build": {
+	"open_pdks": "1.0.309",
+	"magic": "8.3.277"
+    },
+    "commit": {
+	"open_pdks": "41c0908b47130d5675ff8484255b43f66463a7d6",
+	"magic": ""
+    }
+}
