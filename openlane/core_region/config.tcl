@@ -19,7 +19,6 @@ set ::env(STD_CELL_LIBRARY) "sky130_fd_sc_hd"
 set script_dir [file dirname [file normalize [info script]]]
 
 set ::env(DESIGN_NAME) core_region
-set ::env(SYNTH_DEFINES) "USE_POWER_PINS"
 
 # easier method for VERILOG_FILES
 #set ::env(VERILOG_FILES) [glob $::env(DESIGN_DIR)/src/*.v  $::env(DESIGN_DIR)/src/*.sv]
@@ -349,8 +348,7 @@ set ::env(ROUTING_CORES) {6}
 set ::env(GLB_RT_OVERFLOW_ITERS) {64}
 set ::env(GLB_RT_ALLOW_CONGESTION) 1 
 
-### Macro Placement
-set ::env(MACRO_PLACEMENT_CFG) $script_dir/macro.cfg
+
 
 # Maximum layer used for routing is metal 4.
 # This is because this macro will be inserted in a top level (user_project_wrapper) 
@@ -364,6 +362,15 @@ set ::env(RT_MAX_LAYER) {met4}
 # You can draw more power domains if you need to 
 set ::env(VDD_NETS) [list {vccd1}]
 set ::env(GND_NETS) [list {vssd1}]
+set ::env(FP_PDN_ENABLE_MACROS_GRID) "1"
+set ::env(FP_PDN_ENABLE_GLOBAL_CONNECTIONS) "1"
+### Macro Placement
+set ::env(MACRO_PLACEMENT_CFG) $script_dir/macro.cfg
+set ::env(SYNTH_USE_PG_PINS_DEFINES) "USE_POWER_PINS"
+#set ::env(SYNTH_DEFINES) "USE_POWER_PINS"
+## Macro PDN Connections
+set ::env(FP_PDN_MACRO_HOOKS) "\
+   open_ram_2k vccd1 vssd1 vccd1 vssd1"
 
 set ::env(DIODE_INSERTION_STRATEGY) 3 
 # If you're going to use multiple power domains, then disable cvc run.
@@ -386,15 +393,11 @@ set ::env(RUN_CVC) 1
 #set ::env(EXTRA_LIBS) "\
 #	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_sram_macros/lib/sky130_sram_2kbyte_1rw1r_32x512_8_TT_1p8V_25C.lib"
 
-## Macro PDN Connections
-set ::env(FP_PDN_MACRO_HOOKS) "\
-   open_ram_2k vccd1 vssd1 vccd1 vssd1"
-
 ### Black-box verilog and views
 set ::env(VERILOG_FILES_BLACKBOX) "\
 	$::env(CARAVEL_ROOT)/verilog/rtl/defines.v \
-    $script_dir/../../dependencies/pdks/sky130B/libs.ref/sky130_sram_macros/verilog/sky130_sram_2kbyte_1rw1r_32x512_8.v"
-#    $script_dir/../../verilog/rtl/rtl/components/sky130_sram_2kbyte_1rw1r_32x512_8.v"
+    $script_dir/../../verilog/rtl/rtl/components/sky130_sram_2kbyte_1rw1r_32x512_8.v"
+#    $script_dir/../../dependencies/pdks/sky130B/libs.ref/sky130_sram_macros/verilog/sky130_sram_2kbyte_1rw1r_32x512_8.v"
 #	/home/mbaykenar/Desktop/pdks/sky130A/libs.ref/sky130_sram_macros/verilog/sky130_sram_2kbyte_1rw1r_32x512_8.v"
 
 #set ::env(VERILOG_FILES_BLACKBOX) "\
