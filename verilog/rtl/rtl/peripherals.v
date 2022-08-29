@@ -1,3 +1,5 @@
+`define USE_POWER_PINS
+
 module peripherals 
 #(
     parameter AXI_ADDR_WIDTH       = 32,
@@ -8,6 +10,10 @@ module peripherals
     parameter ROM_START_ADDR       = 32'h8000
   )
 (
+`ifdef USE_POWER_PINS
+	vccd1,	// User area 1 1.8V supply
+	vssd1,	// User area 1 digital ground
+`endif
 	clk_i,
 	rst_n,
 	axi_spi_master_aw_addr,
@@ -159,8 +165,8 @@ module peripherals
 	fll1_ack_i,
 	fll1_rdata_i,
 	fll1_lock_i,
-	pad_cfg_o,
-	pad_mux_o,
+//	pad_cfg_o,
+//	pad_mux_o,
 	boot_addr_o
 );
 	//parameter AXI_ADDR_WIDTH = 32;
@@ -173,6 +179,10 @@ module peripherals
     parameter AXI_STRB_WIDTH = AXI_DATA_WIDTH/8;
 	parameter APB_ADDR_WIDTH = 32;
     parameter APB_DATA_WIDTH = 32;
+`ifdef USE_POWER_PINS
+	inout wire vccd1;
+	inout wire vssd1;
+`endif
 	input wire clk_i;
 	input wire rst_n;
 	output wire [AXI_ADDR_WIDTH - 1:0] axi_spi_master_aw_addr;
@@ -324,8 +334,8 @@ module peripherals
 	input wire fll1_ack_i;
 	input wire [31:0] fll1_rdata_i;
 	input wire fll1_lock_i;
-	output wire [191:0] pad_cfg_o;
-	output wire [31:0] pad_mux_o;
+//	output wire [191:0] pad_cfg_o;
+//	output wire [31:0] pad_mux_o;
 	output wire [31:0] boot_addr_o;
 	//localparam APB_ADDR_WIDTH = 32;
 	localparam APB_NUM_SLAVES = 8;
@@ -822,9 +832,9 @@ module peripherals
 		.PRDATA(s_soc_ctrl_bus_prdata),
 		.PREADY(s_soc_ctrl_bus_pready),
 		.PSLVERR(s_soc_ctrl_bus_pslverr),
-		.pad_cfg_o(pad_cfg_o),
+		.pad_cfg_o(),
 		.clk_gate_o(peripheral_clock_gate_ctrl),
-		.pad_mux_o(pad_mux_o),
+		.pad_mux_o(),
 		.boot_addr_o(boot_addr_o)
 	);
 	apb2per #(

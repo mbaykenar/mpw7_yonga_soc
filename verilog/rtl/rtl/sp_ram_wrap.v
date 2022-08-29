@@ -24,8 +24,10 @@ module sp_ram_wrap
 	//parameter RAM_SIZE = 32768;
 	//parameter ADDR_WIDTH = $clog2(RAM_SIZE);
 	//parameter DATA_WIDTH = 32;
+`ifdef USE_POWER_PINS
 inout wire vccd1;
 inout wire vssd1;
+`endif
 	input wire clk;
 	input wire rstn_i;
 	input wire en_i;

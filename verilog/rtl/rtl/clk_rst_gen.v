@@ -1,4 +1,10 @@
+`define USE_POWER_PINS
+
 module clk_rst_gen (
+`ifdef USE_POWER_PINS
+	vccd1,	// User area 1 1.8V supply
+	vssd1,	// User area 1 digital ground
+`endif
 	clk_i,
 	rstn_i,
 	clk_sel_i,
@@ -17,6 +23,10 @@ module clk_rst_gen (
 	clk_o,
 	rstn_o
 );
+`ifdef USE_POWER_PINS
+	inout wire vccd1;
+	inout wire vssd1;
+`endif
 	input wire clk_i;
 	input wire rstn_i;
 	input wire clk_sel_i;
@@ -36,6 +46,10 @@ module clk_rst_gen (
 	output wire rstn_o;
 	wire clk_fll_int;
 	wire clk_int;
+// MBA START
+wire rstn;
+assign rstn = ~rstn_i;
+// MBA END
 	assign clk_int = clk_i;
 	assign fll_ack_o = fll_req_i;
 	assign fll_r_data_o = 1'b0;
@@ -43,7 +57,10 @@ module clk_rst_gen (
 	assign scan_o = 1'b0;
 	rstgen i_rst_gen_soc(
 		.clk_i(clk_int),
-		.rst_ni(rstn_i),
+// MBA START
+//		.rst_ni(rstn_i),
+		.rst_ni(rstn),
+// MBA END
 		.test_mode_i(testmode_i),
 		.rst_no(rstn_o),
 		.init_no()

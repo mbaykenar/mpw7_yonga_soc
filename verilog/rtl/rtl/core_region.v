@@ -232,8 +232,10 @@ module core_region
 	//parameter ZERO_RV32M = 1;
 	//parameter ZERO_RV32E = 0;
     parameter AXI_ID_WIDTH   = AXI_ID_MASTER_WIDTH;
+`ifdef USE_POWER_PINS
 	inout wire vccd1;
 	inout wire vssd1;
+`endif
 	input wire clk;
 	input wire rst_n;
 	input wire testmode_i;
@@ -845,6 +847,10 @@ module core_region
 		.RAM_SIZE(INSTR_RAM_SIZE),
 		.DATA_WIDTH(AXI_DATA_WIDTH)
 	) instr_mem(
+`ifdef USE_POWER_PINS
+	.vccd1(vccd1),	// User area 1 1.8V supply
+	.vssd1(vssd1),	// User area 1 digital ground
+`endif
 		.clk(clk),
 		.rst_n(rst_n),
 		.en_i(instr_mem_en),

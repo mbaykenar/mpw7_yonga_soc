@@ -18,7 +18,7 @@ set ::env(STD_CELL_LIBRARY) "sky130_fd_sc_hd"
 
 set script_dir [file dirname [file normalize [info script]]]
 
-set ::env(DESIGN_NAME) core_region
+set ::env(DESIGN_NAME) {core_region}
 
 # easier method for VERILOG_FILES
 #set ::env(VERILOG_FILES) [glob $::env(DESIGN_DIR)/src/*.v  $::env(DESIGN_DIR)/src/*.sv]
@@ -322,30 +322,31 @@ set ::env(VERILOG_FILES) "\
     $script_dir/../../verilog/rtl/ips/zero-riscy/include/zeroriscy_config.sv \
     $script_dir/../../verilog/rtl/ips/zero-riscy/include/zeroriscy_defines.sv"
 
-set ::env(DESIGN_IS_CORE) 0
+set ::env(DESIGN_IS_CORE) {0}
 
-set ::env(CLOCK_PORT) "clk"
-set ::env(CLOCK_NET) "core_region.clk"
-set ::env(CLOCK_PERIOD) "200"
+set ::env(CLOCK_PORT) {clk}
+set ::env(CLOCK_NET) {clk}
+set ::env(CLOCK_PERIOD) {200}
 
 set ::env(PL_RESIZER_MAX_SLEW_MARGIN) 40
 set ::env(PL_RESIZER_MAX_CAP_MARGIN) 40
 set ::env(GLB_RESIZER_MAX_SLEW_MARGIN) 40
 
 set ::env(FP_SIZING) absolute
-set ::env(DIE_AREA) "0 0 1800 2400"
+set ::env(DIE_AREA) "0 0 2000 2600"
+#set ::env(FP_SIZING) relative
 
 #set ::env(FP_PIN_ORDER_CFG) $script_dir/pin_order.cfg
 set ::env(SYNTH_STRATEGY) "AREA 0"
 set ::env(PL_BASIC_PLACEMENT) 0
-set ::env(PL_TARGET_DENSITY) 0.20
-set ::env(FP_CORE_UTIL) {20}
+set ::env(PL_TARGET_DENSITY) {0.15}
+set ::env(FP_CORE_UTIL) {15}
 set ::env(PL_MACRO_CHANNEL) {30 30}
 set ::env(PL_MACRO_HALO) {10 10}
 set ::env(CELL_PAD) {4}
 set ::env(GLB_RESIZER_HOLD_MAX_BUFFER_PERCENT) {60}
-set ::env(ROUTING_CORES) {6}
-set ::env(GLB_RT_OVERFLOW_ITERS) {64}
+set ::env(ROUTING_CORES) {8}
+set ::env(GLB_RT_OVERFLOW_ITERS) {50}
 set ::env(GLB_RT_ALLOW_CONGESTION) 1 
 
 
@@ -363,14 +364,15 @@ set ::env(RT_MAX_LAYER) {met4}
 set ::env(VDD_NETS) [list {vccd1}]
 set ::env(GND_NETS) [list {vssd1}]
 set ::env(FP_PDN_ENABLE_MACROS_GRID) "1"
-set ::env(FP_PDN_ENABLE_GLOBAL_CONNECTIONS) "1"
+#set ::env(FP_PDN_ENABLE_GLOBAL_CONNECTIONS) "1"
 ### Macro Placement
 set ::env(MACRO_PLACEMENT_CFG) $script_dir/macro.cfg
 set ::env(SYNTH_USE_PG_PINS_DEFINES) "USE_POWER_PINS"
 #set ::env(SYNTH_DEFINES) "USE_POWER_PINS"
 ## Macro PDN Connections
 set ::env(FP_PDN_MACRO_HOOKS) "\
-   open_ram_2k vccd1 vssd1 vccd1 vssd1"
+   data_mem.open_ram_2k vccd1 vssd1 vccd1 vssd1, \
+   instr_mem.sp_ram_wrap_i.open_ram_2k vccd1 vssd1 vccd1 vssd1"
 
 set ::env(DIODE_INSERTION_STRATEGY) 3 
 # If you're going to use multiple power domains, then disable cvc run.
@@ -395,7 +397,6 @@ set ::env(RUN_CVC) 1
 
 ### Black-box verilog and views
 set ::env(VERILOG_FILES_BLACKBOX) "\
-	$::env(CARAVEL_ROOT)/verilog/rtl/defines.v \
     $script_dir/../../verilog/rtl/rtl/components/sky130_sram_2kbyte_1rw1r_32x512_8.v"
 #    $script_dir/../../dependencies/pdks/sky130B/libs.ref/sky130_sram_macros/verilog/sky130_sram_2kbyte_1rw1r_32x512_8.v"
 #	/home/mbaykenar/Desktop/pdks/sky130A/libs.ref/sky130_sram_macros/verilog/sky130_sram_2kbyte_1rw1r_32x512_8.v"

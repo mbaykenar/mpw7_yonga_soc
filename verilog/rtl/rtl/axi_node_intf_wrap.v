@@ -1,3 +1,5 @@
+`define USE_POWER_PINS
+
 module axi_node_intf_wrap 
 #(
     parameter NB_MASTER      = 3,
@@ -8,6 +10,10 @@ module axi_node_intf_wrap
     parameter AXI_USER_WIDTH = 0
     )
 (
+`ifdef USE_POWER_PINS
+	vccd1,	// User area 1 1.8V supply
+	vssd1,	// User area 1 digital ground
+`endif
 	clk,
 	rst_n,
 	test_en_i,
@@ -287,6 +293,10 @@ module axi_node_intf_wrap
 localparam AXI_ID_WIDTH_TARG = AXI_ID_WIDTH;
 localparam AXI_ID_WIDTH_INIT = AXI_ID_WIDTH_TARG + $clog2(NB_SLAVE);
 	parameter AXI_STRB_WIDTH = AXI_DATA_WIDTH / 8;
+`ifdef USE_POWER_PINS
+	inout wire vccd1;
+	inout wire vssd1;
+`endif
 	input wire clk;
 	input wire rst_n;
 	input wire test_en_i;

@@ -1,3 +1,4 @@
+`define USE_POWER_PINS
 module instr_ram_wrap 
 #(
     parameter RAM_SIZE   = 32768,                // in bytes
@@ -5,6 +6,10 @@ module instr_ram_wrap
     parameter DATA_WIDTH = 32
   )
 (
+`ifdef USE_POWER_PINS
+	vccd1,	// User area 1 1.8V supply
+	vssd1,	// User area 1 digital ground
+`endif
 	clk,
 	rst_n,
 	en_i,
@@ -18,6 +23,10 @@ module instr_ram_wrap
 	//parameter RAM_SIZE = 32768;
 	//parameter ADDR_WIDTH = $clog2(RAM_SIZE) + 1;
 	//parameter DATA_WIDTH = 32;
+`ifdef USE_POWER_PINS
+inout wire vccd1;
+inout wire vssd1;
+`endif
 	input wire clk;
 	input wire rst_n;
 	input wire en_i;
@@ -36,6 +45,10 @@ module instr_ram_wrap
 		.RAM_SIZE(RAM_SIZE),
 		.DATA_WIDTH(DATA_WIDTH)
 	) sp_ram_wrap_i(
+`ifdef USE_POWER_PINS
+	.vccd1(vccd1),	// User area 1 1.8V supply
+	.vssd1(vssd1),	// User area 1 digital ground
+`endif
 		.clk(clk),
 		.rstn_i(rst_n),
 		.en_i(en_i & ~is_boot),
