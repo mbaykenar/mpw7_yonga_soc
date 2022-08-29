@@ -34,7 +34,7 @@
 `define AXI_ID_MASTER_WIDTH     2
 `define AXI_ID_SLAVE_WIDTH      4
 `define AXI_USER_WIDTH          1
-`define USE_POWER_PINS          1
+//`define USE_POWER_PINS          1
 
 
 
