@@ -95,10 +95,10 @@ module user_project_wrapper #(
 	parameter AXI_STRB_WIDTH = `AXI_DATA_WIDTH/8;
 	parameter ADDR_WIDTH = 15;
 //	wire clk;	// input 
-`ifdef USE_POWER_PINS
-	wire vccd1;	// inout 
-	wire vssd1;	// inout 
-`endif
+//`ifdef USE_POWER_PINS
+//	wire vccd1;	// inout 
+//	wire vssd1;	// inout 
+//`endif
 //	wire rst_n;	// input 
 //	wire clk_sel_i;	// input 
 //	wire clk_standalone_i; 	// input
