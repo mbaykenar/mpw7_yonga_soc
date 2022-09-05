@@ -1,4 +1,4 @@
-`define USE_POWER_PINS
+//`define USE_POWER_PINS
 
 module clk_rst_gen (
 `ifdef USE_POWER_PINS

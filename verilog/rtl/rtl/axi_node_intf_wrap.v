@@ -1,4 +1,4 @@
-`define USE_POWER_PINS
+//`define USE_POWER_PINS
 
 module axi_node_intf_wrap 
 #(
@@ -280,9 +280,9 @@ module axi_node_intf_wrap
 	m02_b_id,
 	m02_b_user,
 	m02_b_ready,
-	m02_b_valid,
-	start_addr_i,
-	end_addr_i
+	m02_b_valid
+//	start_addr_i,
+//	end_addr_i
 );
 	//parameter NB_MASTER = 3;
 	//parameter NB_SLAVE = 3;
@@ -564,8 +564,8 @@ localparam AXI_ID_WIDTH_INIT = AXI_ID_WIDTH_TARG + $clog2(NB_SLAVE);
 	input wire [AXI_USER_WIDTH - 1:0] m02_b_user;
 	output wire m02_b_ready;
 	input wire m02_b_valid;
-	input wire [(NB_MASTER * AXI_ADDR_WIDTH) - 1:0] start_addr_i;
-	input wire [(NB_MASTER * AXI_ADDR_WIDTH) - 1:0] end_addr_i;
+//	input wire [(NB_MASTER * AXI_ADDR_WIDTH) - 1:0] start_addr_i;
+//	input wire [(NB_MASTER * AXI_ADDR_WIDTH) - 1:0] end_addr_i;
 	localparam NB_REGION = 1;
 
 	wire [(NB_MASTER * AXI_ID_WIDTH_INIT) - 1:0] s_master_aw_id;
@@ -704,8 +704,8 @@ localparam AXI_ID_WIDTH_INIT = AXI_ID_WIDTH_TARG + $clog2(NB_SLAVE);
 	assign s_master_r_user[0+:AXI_USER_WIDTH] = m00_r_user;
 	assign s_master_r_valid[0] = m00_r_valid;
 	assign m00_r_ready = s_master_r_ready[0];
-	assign s_start_addr[0+:AXI_ADDR_WIDTH] = start_addr_i[0+:AXI_ADDR_WIDTH];
-	assign s_end_addr[0+:AXI_ADDR_WIDTH] = end_addr_i[0+:AXI_ADDR_WIDTH];
+//	assign s_start_addr[0+:AXI_ADDR_WIDTH] = start_addr_i[0+:AXI_ADDR_WIDTH];
+//	assign s_end_addr[0+:AXI_ADDR_WIDTH] = end_addr_i[0+:AXI_ADDR_WIDTH];
 	assign m01_aw_id[AXI_ID_WIDTH_INIT - 1:0] = s_master_aw_id[AXI_ID_WIDTH_INIT+:AXI_ID_WIDTH_INIT];
 	assign m01_aw_addr = s_master_aw_addr[AXI_ADDR_WIDTH+:AXI_ADDR_WIDTH];
 	assign m01_aw_len = s_master_aw_len[8+:8];
@@ -750,8 +750,8 @@ localparam AXI_ID_WIDTH_INIT = AXI_ID_WIDTH_TARG + $clog2(NB_SLAVE);
 	assign s_master_r_user[AXI_USER_WIDTH+:AXI_USER_WIDTH] = m01_r_user;
 	assign s_master_r_valid[1] = m01_r_valid;
 	assign m01_r_ready = s_master_r_ready[1];
-	assign s_start_addr[AXI_ADDR_WIDTH+:AXI_ADDR_WIDTH] = start_addr_i[AXI_ADDR_WIDTH+:AXI_ADDR_WIDTH];
-	assign s_end_addr[AXI_ADDR_WIDTH+:AXI_ADDR_WIDTH] = end_addr_i[AXI_ADDR_WIDTH+:AXI_ADDR_WIDTH];
+//	assign s_start_addr[AXI_ADDR_WIDTH+:AXI_ADDR_WIDTH] = start_addr_i[AXI_ADDR_WIDTH+:AXI_ADDR_WIDTH];
+//	assign s_end_addr[AXI_ADDR_WIDTH+:AXI_ADDR_WIDTH] = end_addr_i[AXI_ADDR_WIDTH+:AXI_ADDR_WIDTH];
 	assign m02_aw_id[AXI_ID_WIDTH_INIT - 1:0] = s_master_aw_id[2 * AXI_ID_WIDTH_INIT+:AXI_ID_WIDTH_INIT];
 	assign m02_aw_addr = s_master_aw_addr[2 * AXI_ADDR_WIDTH+:AXI_ADDR_WIDTH];
 	assign m02_aw_len = s_master_aw_len[16+:8];
@@ -796,8 +796,8 @@ localparam AXI_ID_WIDTH_INIT = AXI_ID_WIDTH_TARG + $clog2(NB_SLAVE);
 	assign s_master_r_user[2 * AXI_USER_WIDTH+:AXI_USER_WIDTH] = m02_r_user;
 	assign s_master_r_valid[2] = m02_r_valid;
 	assign m02_r_ready = s_master_r_ready[2];
-	assign s_start_addr[2 * AXI_ADDR_WIDTH+:AXI_ADDR_WIDTH] = start_addr_i[2 * AXI_ADDR_WIDTH+:AXI_ADDR_WIDTH];
-	assign s_end_addr[2 * AXI_ADDR_WIDTH+:AXI_ADDR_WIDTH] = end_addr_i[2 * AXI_ADDR_WIDTH+:AXI_ADDR_WIDTH];
+//	assign s_start_addr[2 * AXI_ADDR_WIDTH+:AXI_ADDR_WIDTH] = start_addr_i[2 * AXI_ADDR_WIDTH+:AXI_ADDR_WIDTH];
+//	assign s_end_addr[2 * AXI_ADDR_WIDTH+:AXI_ADDR_WIDTH] = end_addr_i[2 * AXI_ADDR_WIDTH+:AXI_ADDR_WIDTH];
 	assign s_slave_aw_id[0+:AXI_ID_WIDTH_TARG] = s00_aw_id[AXI_ID_WIDTH_TARG - 1:0];
 	assign s_slave_aw_addr[0+:AXI_ADDR_WIDTH] = s00_aw_addr;
 	assign s_slave_aw_len[0+:8] = s00_aw_len;
@@ -1035,6 +1035,8 @@ localparam AXI_ID_WIDTH_INIT = AXI_ID_WIDTH_TARG + $clog2(NB_SLAVE);
 		.cfg_valid_rule_i(s_valid_rule),
 		.cfg_connectivity_map_i(s_connectivity_map)
 	);
+assign s_start_addr = 96'h1a1000000010000000000000;
+assign s_end_addr = 96'h1a11ffff001fffff000fffff;
 	assign s_valid_rule = 1'sb1;
 	assign s_connectivity_map = 1'sb1;
 endmodule

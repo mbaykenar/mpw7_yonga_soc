@@ -39,7 +39,7 @@ set ::env(VERILOG_FILES) "\
 
 ## Clock configurations
 set ::env(CLOCK_PORT) "user_clock2"
-set ::env(CLOCK_NET) "mprj.clk"
+set ::env(CLOCK_NET) "user_clock2"
 
 set ::env(CLOCK_PERIOD) "200"
 
@@ -50,15 +50,17 @@ set ::env(FP_PDN_CORE_RING) 1
 
 #set ::env(VDD_NETS) [list {vccd1}]
 #set ::env(GND_NETS) [list {vssd1}]
+#set ::env(VDD_NETS) {vccd1 vccd2 vdda1 vdda2}
+#set ::env(GND_NETS) {vssd1 vssd2 vssa1 vssa2}
 #set ::env(VDD_NET) {vccd1}
 #set ::env(VDD_PIN) {vccd1}
 #set ::env(GND_NET) {vssd1}
 #set ::env(GND_PIN) {vssd1}
-#set ::env(FP_PDN_ENABLE_MACROS_GRID) "1"
+set ::env(FP_PDN_ENABLE_MACROS_GRID) "1"
 #set ::env(FP_PDN_ENABLE_GLOBAL_CONNECTIONS) "1"
 ### Macro Placement
 set ::env(MACRO_PLACEMENT_CFG) $script_dir/macro.cfg
-#set ::env(SYNTH_USE_PG_PINS_DEFINES) "USE_POWER_PINS"
+set ::env(SYNTH_USE_PG_PINS_DEFINES) "USE_POWER_PINS"
 #set ::env(SYNTH_DEFINES) "USE_POWER_PINS"
 
 # other configurations
@@ -101,7 +103,7 @@ set ::env(GRT_OBS) "\
 
 ### Black-box verilog and views
 set ::env(VERILOG_FILES_BLACKBOX) "\
-	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_sram_macros/verilog/sky130_sram_2kbyte_1rw1r_32x512_8.v \
+	$script_dir/../../verilog/rtl/rtl/components/sky130_sram_2kbyte_1rw1r_32x512_8.v \
 	$script_dir/../../verilog/rtl/rtl/mba_core_region.v \
 	$script_dir/../../verilog/rtl/rtl/clk_rst_gen.v \
 	$script_dir/../../verilog/rtl/rtl/peripherals.v \
@@ -123,7 +125,7 @@ set ::env(EXTRA_GDS_FILES) "\
 
 
 # set ::env(GLB_RT_MAXLAYER) 5
-set ::env(RT_MAX_LAYER) {met5}
+set ::env(RT_MAX_LAYER) {met4}
 
 # disable pdn check nodes becuase it hangs with multiple power domains.
 # any issue with pdn connections will be flagged with LVS so it is not a critical check.

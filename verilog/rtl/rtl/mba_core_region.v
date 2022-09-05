@@ -1,4 +1,4 @@
-`define USE_POWER_PINS
+//`define USE_POWER_PINS
 module mba_core_region 
 #(
     parameter AXI_ADDR_WIDTH       = 32,

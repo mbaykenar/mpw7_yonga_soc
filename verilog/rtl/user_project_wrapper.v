@@ -460,12 +460,19 @@ module user_project_wrapper #(
 	//////////////////////////////////////////
 	// MBA END
 
-	assign io_oeb[37:27] = 11'b00000000000;
-	assign io_out[26:0] = 27'b111111111111111111111111111; // does not have effect due to io_oeb
-	assign io_oeb[26:0] = 27'b111111111111111111111111111;
-	assign wbs_ack_o = 1'b0;
-	assign wbs_dat_o = 32'b00000000000000000000000000000000;
-	assign la_data_out[63:0] = 64'b0000000000000000000000000000000000000000000000000000000000000000;
+//	assign io_oeb[37:27] = 11'b00000000000;	
+//	assign io_out[26:0] = 27'b111111111111111111111111111; // does not have effect due to io_oeb
+//	assign io_oeb[26:0] = 27'b111111111111111111111111111;
+//	assign wbs_ack_o = 1'b0;
+//	assign wbs_dat_o = 32'b00000000000000000000000000000000;
+//	assign la_data_out[63:0] = 64'b0000000000000000000000000000000000000000000000000000000000000000;
+
+	assign io_oeb[37:27] = {11{wb_rst_i}};
+	assign io_out[26:0] = {27{wb_rst_i}}; // does not have effect due to io_oeb
+	assign io_oeb[26:0] = {27{wb_rst_i}};
+	assign wbs_ack_o = wb_rst_i;
+	assign wbs_dat_o = {32{wb_rst_i}};
+	assign la_data_out[63:0] = {64{wb_rst_i}};
 
 
 /*--------------------------------------*/
@@ -481,7 +488,8 @@ module user_project_wrapper #(
 		.clk_sel_i(la_data_in[0]),
 		.clk_standalone_i(la_data_in[1]),
 		.testmode_i(la_data_in[2]),
-		.scan_i(1'b0),
+//		.scan_i(1'b0),
+.scan_i(wb_dat_i[0]),
 		.scan_o(),
 		.scan_en_i(la_data_in[3]),
 		.fll_req_i(cfgreq_fll_int),
@@ -745,7 +753,7 @@ module user_project_wrapper #(
 		.addr0(mba_instr_mem_addr0_o[10:2]),
 		.din0(mba_instr_mem_din0_o),
 		.dout0(mba_instr_mem_dout0_i),
-		.clk1(1'b0),
+		.clk1(wb_dat_i[0]),
 		.csb1(mba_instr_mem_csb1_o),
 		.addr1(mba_instr_mem_addr1_o[10:2]),
 		.dout1()
@@ -764,7 +772,7 @@ module user_project_wrapper #(
 		.addr0(mba_data_mem_addr0_o[10:2]),
 		.din0(mba_data_mem_din0_o),
 		.dout0(mba_data_mem_dout0_i),
-		.clk1(1'b0),
+		.clk1(wb_dat_i[0]),
 		.csb1(mba_data_mem_csb1_o),
 		.addr1(mba_data_mem_addr1_o[10:2]),
 		.dout1()
@@ -845,9 +853,9 @@ module user_project_wrapper #(
 		.spi_sdo2_o(),
 		.spi_sdo3_o(),
 		.spi_sdi0_i(io_in[19]),
-		.spi_sdi1_i(1'b0),
-		.spi_sdi2_i(1'b0),
-		.spi_sdi3_i(1'b0),
+		.spi_sdi1_i(wb_dat_i[0]),
+		.spi_sdi2_i(wb_dat_i[0]),
+		.spi_sdi3_i(wb_dat_i[0]),
 		.slave_aw_addr(slaves_02_aw_addr),
 		.slave_aw_prot(slaves_02_aw_prot),
 		.slave_aw_region(slaves_02_aw_region),
@@ -909,9 +917,9 @@ module user_project_wrapper #(
 		.spi_master_sdo2(),
 		.spi_master_sdo3(),
 		.spi_master_sdi0(io_in[21]),
-		.spi_master_sdi1(1'b0),
-		.spi_master_sdi2(1'b0),
-		.spi_master_sdi3(1'b0),
+		.spi_master_sdi1(wb_dat_i[0]),
+		.spi_master_sdi2(wb_dat_i[0]),
+		.spi_master_sdi3(wb_dat_i[0]),
 		.scl_pad_i(io_in[22]),
 		.scl_pad_o(io_out[28]),
 		.scl_padoen_o(),
@@ -1214,9 +1222,9 @@ module user_project_wrapper #(
 		.s02_b_id(masters_02_b_id),
 		.s02_b_user(masters_02_b_user),
 		.s02_b_ready(masters_02_b_ready),
-		.s02_b_valid(masters_02_b_valid),
-		.start_addr_i(96'h1a1000000010000000000000),
-		.end_addr_i(96'h1a11ffff001fffff000fffff)
+		.s02_b_valid(masters_02_b_valid)
+//		.start_addr_i(96'h1a1000000010000000000000),
+//		.end_addr_i(96'h1a11ffff001fffff000fffff)
 	);
 
 
