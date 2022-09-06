@@ -527,7 +527,7 @@ module user_project_wrapper #(
 	.io_out(io_out[26:0]),
 	.wbs_ack_o(wbs_ack_o),
 	.wbs_dat_o(wbs_dat_o),
-	.la_data_out(la_data_out)
+	.la_data_out(la_data_out[63:0])
 // MBA END
 	);
 

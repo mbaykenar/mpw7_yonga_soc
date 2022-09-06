@@ -44,30 +44,30 @@ set ::env(CLOCK_NET) "user_clock2"
 set ::env(CLOCK_PERIOD) "200"
 
 set ::env(DESIGN_IS_CORE) 1
-set ::env(FP_PDN_CORE_RING) 1
+#set ::env(FP_PDN_CORE_RING) 1
 
 ## Internal Macros
 
 #set ::env(VDD_NETS) [list {vccd1}]
 #set ::env(GND_NETS) [list {vssd1}]
-set ::env(VDD_NETS) {vccd1 vccd2 vdda1 vdda2}
-set ::env(GND_NETS) {vssd1 vssd2 vssa1 vssa2}
-set ::env(VDD_NET) {vccd1}
-set ::env(VDD_PIN) {vccd1}
-set ::env(GND_NET) {vssd1}
-set ::env(GND_PIN) {vssd1}
-set ::env(FP_PDN_ENABLE_MACROS_GRID) "1"
+#set ::env(VDD_NETS) {vccd1 vccd2 vdda1 vdda2}
+#set ::env(GND_NETS) {vssd1 vssd2 vssa1 vssa2}
+#set ::env(VDD_NET) {vccd1}
+#set ::env(VDD_PIN) {vccd1}
+#set ::env(GND_NET) {vssd1}
+#set ::env(GND_PIN) {vssd1}
+#set ::env(FP_PDN_ENABLE_MACROS_GRID) "1"
 #set ::env(FP_PDN_ENABLE_GLOBAL_CONNECTIONS) "1"
 ### Macro Placement
 set ::env(MACRO_PLACEMENT_CFG) $script_dir/macro.cfg
-set ::env(SYNTH_USE_PG_PINS_DEFINES) "USE_POWER_PINS"
+#set ::env(SYNTH_USE_PG_PINS_DEFINES) "USE_POWER_PINS"
 #set ::env(SYNTH_DEFINES) "USE_POWER_PINS"
 
 # other configurations
-set ::env(PL_RESIZER_MAX_SLEW_MARGIN) 40
-set ::env(PL_RESIZER_MAX_CAP_MARGIN) 40
-set ::env(GLB_RESIZER_MAX_SLEW_MARGIN) 40
-set ::env(SYNTH_STRATEGY) "AREA 0"
+#set ::env(PL_RESIZER_MAX_SLEW_MARGIN) 40
+#set ::env(PL_RESIZER_MAX_CAP_MARGIN) 40
+#set ::env(GLB_RESIZER_MAX_SLEW_MARGIN) 40
+#set ::env(SYNTH_STRATEGY) "AREA 0"
 #set ::env(PL_BASIC_PLACEMENT) 0
 #set ::env(PL_TARGET_DENSITY) {0.01}
 #set ::env(FP_CORE_UTIL) {1}
