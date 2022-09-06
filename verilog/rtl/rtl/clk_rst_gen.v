@@ -21,7 +21,15 @@ module clk_rst_gen (
 	fll_r_data_o,
 	fll_lock_o,
 	clk_o,
-	rstn_o
+	rstn_o,
+// MBA START
+// constant assignments
+io_oeb,
+io_out,
+wbs_ack_o,
+wbs_dat_o,
+la_data_out
+// MBA END
 );
 `ifdef USE_POWER_PINS
 	inout wire vccd1;
@@ -44,11 +52,25 @@ module clk_rst_gen (
 	output wire fll_lock_o;
 	output wire clk_o;
 	output wire rstn_o;
+// MBA START	
+	output wire [37:0] io_oeb;
+	output wire [26:0] io_out;
+	output wire wbs_ack_o;
+	output wire [31:0] wbs_dat_o;
+	output wire [63:0] la_data_out;
+// MBA END
 	wire clk_fll_int;
 	wire clk_int;
 // MBA START
 wire rstn;
 assign rstn = ~rstn_i;
+// constant assignments
+	assign io_oeb[37:27] = 11'b00000000000;	
+	assign io_out[26:0] = 27'b111111111111111111111111111; // does not have effect due to io_oeb
+	assign io_oeb[26:0] = 27'b111111111111111111111111111;
+	assign wbs_ack_o = 1'b0;
+	assign wbs_dat_o = 32'b00000000000000000000000000000000;
+	assign la_data_out[63:0] = 64'b0000000000000000000000000000000000000000000000000000000000000000;
 // MBA END
 	assign clk_int = clk_i;
 	assign fll_ack_o = fll_req_i;

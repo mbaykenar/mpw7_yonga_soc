@@ -457,6 +457,26 @@ module user_project_wrapper #(
 	wire [31:0] mba_data_mem_dout0_i;
 	wire mba_data_mem_csb1_o;
 	wire [31:0] mba_data_mem_addr1_o;	
+
+	// dummy assignments
+	wire spi_sdo1_o;
+	wire spi_sdo2_o;
+	wire spi_sdo3_o;
+	wire uart_rts;
+	wire uart_dtr;
+	wire spi_master_csn1;
+	wire spi_master_csn2;
+	wire spi_master_csn3;
+	wire spi_master_sdo1;
+	wire spi_master_sdo2;
+	wire spi_master_sdo3;
+	wire scl_padoen_o;
+	wire sda_padoen_o;
+	wire [191:0] gpio_padcfg;
+	wire [31:0] instr_ram_dout1;
+	wire [31:0] data_ram_dout1;
+	wire scan_o;
+
 	//////////////////////////////////////////
 	// MBA END
 
@@ -467,12 +487,12 @@ module user_project_wrapper #(
 //	assign wbs_dat_o = 32'b00000000000000000000000000000000;
 //	assign la_data_out[63:0] = 64'b0000000000000000000000000000000000000000000000000000000000000000;
 
-	assign io_oeb[37:27] = {11{wb_rst_i}};
-	assign io_out[26:0] = {27{wb_rst_i}}; // does not have effect due to io_oeb
-	assign io_oeb[26:0] = {27{wb_rst_i}};
-	assign wbs_ack_o = wb_rst_i;
-	assign wbs_dat_o = {32{wb_rst_i}};
-	assign la_data_out[63:0] = {64{wb_rst_i}};
+//	assign io_oeb[37:27] = {11{wb_rst_i}};
+//	assign io_out[26:0] = {27{wb_rst_i}}; // does not have effect due to io_oeb
+//	assign io_oeb[26:0] = {27{wb_rst_i}};
+//	assign wbs_ack_o = wb_rst_i;
+//	assign wbs_dat_o = {32{wb_rst_i}};
+//	assign la_data_out[63:0] = {64{wb_rst_i}};
 
 
 /*--------------------------------------*/
@@ -490,7 +510,7 @@ module user_project_wrapper #(
 		.testmode_i(la_data_in[2]),
 //		.scan_i(1'b0),
 .scan_i(wb_dat_i[0]),
-		.scan_o(),
+		.scan_o(scan_o),
 		.scan_en_i(la_data_in[3]),
 		.fll_req_i(cfgreq_fll_int),
 		.fll_wrn_i(cfgweb_n_fll_int),
@@ -500,7 +520,15 @@ module user_project_wrapper #(
 		.fll_r_data_o(cfgq_fll_int),
 		.fll_lock_o(lock_fll_int),
 		.clk_o(clk_int),
-		.rstn_o(rstn_int)
+		.rstn_o(rstn_int),
+// MBA START
+// constant assignments
+	.io_oeb(io_oeb),
+	.io_out(io_out[26:0]),
+	.wbs_ack_o(wbs_ack_o),
+	.wbs_dat_o(wbs_dat_o),
+	.la_data_out(la_data_out)
+// MBA END
 	);
 
 	mba_core_region #(
@@ -756,7 +784,7 @@ module user_project_wrapper #(
 		.clk1(wb_dat_i[0]),
 		.csb1(mba_instr_mem_csb1_o),
 		.addr1(mba_instr_mem_addr1_o[10:2]),
-		.dout1()
+		.dout1(instr_ram_dout1)
 	);
 	//////////////////////////////////////////
 	// data memory
@@ -775,7 +803,7 @@ module user_project_wrapper #(
 		.clk1(wb_dat_i[0]),
 		.csb1(mba_data_mem_csb1_o),
 		.addr1(mba_data_mem_addr1_o[10:2]),
-		.dout1()
+		.dout1(data_ram_dout1)
 	);
 	//////////////////////////////////////////
 	// MBA END
@@ -849,9 +877,9 @@ module user_project_wrapper #(
 		.spi_cs_i(io_in[18]),
 		.spi_mode_o(io_out[37:36]),
 		.spi_sdo0_o(io_out[35]),
-		.spi_sdo1_o(),
-		.spi_sdo2_o(),
-		.spi_sdo3_o(),
+		.spi_sdo1_o(spi_sdo1_o),
+		.spi_sdo2_o(spi_sdo2_o),
+		.spi_sdo3_o(spi_sdo3_o),
 		.spi_sdi0_i(io_in[19]),
 		.spi_sdi1_i(wb_dat_i[0]),
 		.spi_sdi2_i(wb_dat_i[0]),
@@ -902,34 +930,34 @@ module user_project_wrapper #(
 		.slave_b_valid(slaves_02_b_valid),
 		.uart_tx(io_out[34]),
 		.uart_rx(io_in[20]),
-		.uart_rts(),
-		.uart_dtr(),
+		.uart_rts(uart_rts),
+		.uart_dtr(uart_dtr),
 		.uart_cts(la_data_in[4]),
 		.uart_dsr(la_data_in[5]),
 		.spi_master_clk(io_out[33]),
 		.spi_master_csn0(io_out[32]),
-		.spi_master_csn1(),
-		.spi_master_csn2(),
-		.spi_master_csn3(),
+		.spi_master_csn1(spi_master_csn1),
+		.spi_master_csn2(spi_master_csn2),
+		.spi_master_csn3(spi_master_csn3),
 		.spi_master_mode(io_out[31:30]),
 		.spi_master_sdo0(io_out[29]),
-		.spi_master_sdo1(),
-		.spi_master_sdo2(),
-		.spi_master_sdo3(),
+		.spi_master_sdo1(spi_master_sdo1),
+		.spi_master_sdo2(spi_master_sdo2),
+		.spi_master_sdo3(spi_master_sdo3),
 		.spi_master_sdi0(io_in[21]),
 		.spi_master_sdi1(wb_dat_i[0]),
 		.spi_master_sdi2(wb_dat_i[0]),
 		.spi_master_sdi3(wb_dat_i[0]),
 		.scl_pad_i(io_in[22]),
 		.scl_pad_o(io_out[28]),
-		.scl_padoen_o(),
+		.scl_padoen_o(scl_padoen_o),
 		.sda_pad_i(io_in[23]),
 		.sda_pad_o(io_out[27]),
-		.sda_padoen_o(),
+		.sda_padoen_o(sda_padoen_o),
 		.gpio_in(la_data_in[38:7]),
 		.gpio_out(la_data_out[95:64]),
 		.gpio_dir(la_data_out[127:96]),
-		.gpio_padcfg(),
+		.gpio_padcfg(gpio_padcfg),
 		.core_busy_i(core_busy_int),
 		.irq_o(irq_to_core_int),
 		.fetch_enable_i(la_data_in[6]),

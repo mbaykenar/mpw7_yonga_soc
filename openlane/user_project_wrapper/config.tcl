@@ -50,12 +50,12 @@ set ::env(FP_PDN_CORE_RING) 1
 
 #set ::env(VDD_NETS) [list {vccd1}]
 #set ::env(GND_NETS) [list {vssd1}]
-#set ::env(VDD_NETS) {vccd1 vccd2 vdda1 vdda2}
-#set ::env(GND_NETS) {vssd1 vssd2 vssa1 vssa2}
-#set ::env(VDD_NET) {vccd1}
-#set ::env(VDD_PIN) {vccd1}
-#set ::env(GND_NET) {vssd1}
-#set ::env(GND_PIN) {vssd1}
+set ::env(VDD_NETS) {vccd1 vccd2 vdda1 vdda2}
+set ::env(GND_NETS) {vssd1 vssd2 vssa1 vssa2}
+set ::env(VDD_NET) {vccd1}
+set ::env(VDD_PIN) {vccd1}
+set ::env(GND_NET) {vssd1}
+set ::env(GND_PIN) {vssd1}
 set ::env(FP_PDN_ENABLE_MACROS_GRID) "1"
 #set ::env(FP_PDN_ENABLE_GLOBAL_CONNECTIONS) "1"
 ### Macro Placement
@@ -74,8 +74,13 @@ set ::env(SYNTH_STRATEGY) "AREA 0"
 set ::env(CELL_PAD) {4}
 #set ::env(GLB_RESIZER_HOLD_MAX_BUFFER_PERCENT) {60}
 set ::env(ROUTING_CORES) {8}
+
 set ::env(GLB_RT_OVERFLOW_ITERS) {50}
-set ::env(GLB_RT_ALLOW_CONGESTION) 1 
+# for newer openlanes
+#set ::env(GRT_OVERFLOW_ITERS) {50}
+set ::env(GLB_RT_ALLOW_CONGESTION) 1
+# for newer openlanes
+#set ::env(GRT_ALLOW_CONGESTION) 1  
 
 ### Macro PDN Connections
 set ::env(FP_PDN_MACRO_HOOKS) "\
@@ -124,7 +129,7 @@ set ::env(EXTRA_GDS_FILES) "\
 	$script_dir/../../gds/axi_node_intf_wrap.gds"
 
 
-# set ::env(GLB_RT_MAXLAYER) 5
+#set ::env(GLB_RT_MAXLAYER) 5
 set ::env(RT_MAX_LAYER) {met4}
 
 # disable pdn check nodes becuase it hangs with multiple power domains.
