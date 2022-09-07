@@ -24,6 +24,7 @@ module clk_rst_gen (
 	rstn_o,
 // MBA START
 // constant assignments
+user_irq,
 io_oeb,
 io_out,
 wbs_ack_o,
@@ -53,8 +54,9 @@ la_data_out
 	output wire clk_o;
 	output wire rstn_o;
 // MBA START	
+	output wire [2:0] user_irq;
 	output wire [37:0] io_oeb;
-	output wire [26:0] io_out;
+	output wire [25:0] io_out;
 	output wire wbs_ack_o;
 	output wire [31:0] wbs_dat_o;
 	output wire [63:0] la_data_out;
@@ -65,9 +67,10 @@ la_data_out
 wire rstn;
 assign rstn = ~rstn_i;
 // constant assignments
-	assign io_oeb[37:27] = 11'b00000000000;	
-	assign io_out[26:0] = 27'b111111111111111111111111111; // does not have effect due to io_oeb
-	assign io_oeb[26:0] = 27'b111111111111111111111111111;
+	assign user_irq = 3'b000;
+	assign io_oeb[37:26] = 12'b000000000000;	
+	assign io_out[25:0] = 26'b11111111111111111111111111; // does not have effect due to io_oeb
+	assign io_oeb[25:0] = 26'b11111111111111111111111111;
 	assign wbs_ack_o = 1'b0;
 	assign wbs_dat_o = 32'b00000000000000000000000000000000;
 	assign la_data_out[63:0] = 64'b0000000000000000000000000000000000000000000000000000000000000000;

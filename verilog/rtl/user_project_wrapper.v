@@ -523,8 +523,9 @@ module user_project_wrapper #(
 		.rstn_o(rstn_int),
 // MBA START
 // constant assignments
+	.user_irq(user_irq),
 	.io_oeb(io_oeb),
-	.io_out(io_out[26:0]),
+	.io_out(io_out[25:0]),
 	.wbs_ack_o(wbs_ack_o),
 	.wbs_dat_o(wbs_dat_o),
 	.la_data_out(la_data_out[63:0])
@@ -741,7 +742,7 @@ module user_project_wrapper #(
 		.trstn_i(io_in[13]),
 		.tms_i(io_in[14]),
 		.tdi_i(io_in[15]),
-		.tdo_o(io_in[16]),
+		.tdo_o(io_out[26]),
 	// MBA START
 	//////////////////////////////////////////
 	// instruction memory port
@@ -1258,4 +1259,4 @@ module user_project_wrapper #(
 
 endmodule	// user_project_wrapper
 
-`default_nettype wire
+`default_nettype none
