@@ -87,7 +87,6 @@ set ::env(FP_PDN_MACRO_HOOKS) "\
    core_region_i vccd1 vssd1 vccd1 vssd1, \
    axi_interconnect_i vccd1 vssd1 vccd1 vssd1, \
    peripherals_i vccd1 vssd1 vccd1 vssd1, \
-   clk_rst_gen_i vccd1 vssd1 vccd1 vssd1, \
    instr_ram vccd1 vssd1 vccd1 vssd1, \
    data_ram vccd1 vssd1 vccd1 vssd1"
 
@@ -110,21 +109,18 @@ set ::env(GRT_OBS) "\
 set ::env(VERILOG_FILES_BLACKBOX) "\
 	$script_dir/../../verilog/rtl/rtl/components/sky130_sram_2kbyte_1rw1r_32x512_8.v \
 	$script_dir/../../verilog/rtl/rtl/mba_core_region.v \
-	$script_dir/../../verilog/rtl/rtl/clk_rst_gen.v \
 	$script_dir/../../verilog/rtl/rtl/peripherals.v \
 	$script_dir/../../verilog/rtl/rtl/axi_node_intf_wrap.v"
 
 set ::env(EXTRA_LEFS) "\
 	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_sram_macros/lef/sky130_sram_2kbyte_1rw1r_32x512_8.lef \
 	$script_dir/../../lef/mba_core_region.lef \
-	$script_dir/../../lef/clk_rst_gen.lef \
 	$script_dir/../../lef/peripherals.lef \
 	$script_dir/../../lef/axi_node_intf_wrap.lef"
 
 set ::env(EXTRA_GDS_FILES) "\
 	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_sram_macros/gds/sky130_sram_2kbyte_1rw1r_32x512_8.gds \
 	$script_dir/../../gds/mba_core_region.gds \
-	$script_dir/../../gds/clk_rst_gen.gds \
 	$script_dir/../../gds/peripherals.gds \
 	$script_dir/../../gds/axi_node_intf_wrap.gds"
 
