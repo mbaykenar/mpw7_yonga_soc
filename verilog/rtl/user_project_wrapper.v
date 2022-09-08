@@ -498,39 +498,38 @@ module user_project_wrapper #(
 /*--------------------------------------*/
 /* User project is instantiated  here   */
 /*--------------------------------------*/
-	clk_rst_gen clk_rst_gen_i(
-	`ifdef USE_POWER_PINS
-		.vccd1(vccd1),	// User area 1 1.8V supply
-		.vssd1(vssd1),	// User area 1 digital ground
-	`endif
-		.clk_i(user_clock2),
-		.rstn_i(wb_rst_i),
-		.clk_sel_i(la_data_in[0]),
-		.clk_standalone_i(la_data_in[1]),
-		.testmode_i(la_data_in[2]),
-//		.scan_i(1'b0),
-.scan_i(io_in[21]),
-		.scan_o(scan_o),
-		.scan_en_i(la_data_in[3]),
-		.fll_req_i(cfgreq_fll_int),
-		.fll_wrn_i(cfgweb_n_fll_int),
-		.fll_add_i(cfgad_fll_int),
-		.fll_data_i(cfgd_fll_int),
-		.fll_ack_o(cfgack_fll_int),
-		.fll_r_data_o(cfgq_fll_int),
-		.fll_lock_o(lock_fll_int),
-		.clk_o(clk_int),
-		.rstn_o(rstn_int),
+//	clk_rst_gen clk_rst_gen_i(
+//	`ifdef USE_POWER_PINS
+//		.vccd1(vccd1),	// User area 1 1.8V supply
+//		.vssd1(vssd1),	// User area 1 digital ground
+//	`endif
+//		.clk_i(user_clock2),
+//		.rstn_i(wb_rst_i),
+//		.clk_sel_i(la_data_in[0]),
+//		.clk_standalone_i(la_data_in[1]),
+//		.testmode_i(la_data_in[2]),
+//		.scan_i(io_in[21]),
+//		.scan_o(scan_o),
+//		.scan_en_i(la_data_in[3]),
+//		.fll_req_i(cfgreq_fll_int),
+//		.fll_wrn_i(cfgweb_n_fll_int),
+//		.fll_add_i(cfgad_fll_int),
+//		.fll_data_i(cfgd_fll_int),
+//		.fll_ack_o(cfgack_fll_int),
+//		.fll_r_data_o(cfgq_fll_int),
+//		.fll_lock_o(lock_fll_int),
+//		.clk_o(clk_int),
+//		.rstn_o(rstn_int),
 // MBA START
 // constant assignments
-	.user_irq(user_irq),
-	.io_oeb(io_oeb),
-	.io_out(io_out[25:0]),
-	.wbs_ack_o(wbs_ack_o),
-	.wbs_dat_o(wbs_dat_o),
-	.la_data_out(la_data_out[63:0])
+//	.user_irq(user_irq),
+//	.io_oeb(io_oeb),
+//	.io_out(io_out[25:0]),
+//	.wbs_ack_o(wbs_ack_o),
+//	.wbs_dat_o(wbs_dat_o),
+//	.la_data_out(la_data_out[63:0])
 // MBA END
-	);
+//	);
 
 	mba_core_region #(
 		.AXI_ADDR_WIDTH       (`AXI_ADDR_WIDTH     ),
@@ -820,6 +819,31 @@ module user_project_wrapper #(
 		.vccd1(vccd1),
 		.vssd1(vssd1),
 `endif
+// MBA START
+		.clk_i_pll(user_clock2),
+		.rstn_i_pll(wb_rst_i),
+		.clk_sel_i_pll(la_data_in[0]),
+		.clk_standalone_i_pll(la_data_in[1]),
+		.testmode_i_pll(la_data_in[2]),
+		.scan_i_pll(io_in[21]),
+		.scan_o_pll(scan_o),
+		.scan_en_i_pll(la_data_in[3]),
+		.fll_req_i_pll(cfgreq_fll_int),
+		.fll_wrn_i_pll(cfgweb_n_fll_int),
+		.fll_add_i_pll(cfgad_fll_int),
+		.fll_data_i_pll(cfgd_fll_int),
+		.fll_ack_o_pll(cfgack_fll_int),
+		.fll_r_data_o_pll(cfgq_fll_int),
+		.fll_lock_o_pll(lock_fll_int),
+		.clk_o_pll(clk_int),
+		.rstn_o_pll(rstn_int),
+		.user_irq_pll(user_irq),
+		.io_oeb_pll(io_oeb),
+		.io_out_pll(io_out[25:0]),
+		.wbs_ack_o_pll(wbs_ack_o),
+		.wbs_dat_o_pll(wbs_dat_o),
+		.la_data_out_pll(la_data_out[63:0]),
+// MBA END
 		.clk_i(clk_int),
 		.rst_n(rstn_int),
 		.axi_spi_master_aw_addr(masters_02_aw_addr),

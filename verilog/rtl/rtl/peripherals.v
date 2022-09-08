@@ -14,6 +14,31 @@ module peripherals
 	vccd1,	// User area 1 1.8V supply
 	vssd1,	// User area 1 digital ground
 `endif
+// MBA START
+	clk_i_pll,
+	rstn_i_pll,
+	clk_sel_i_pll,
+	clk_standalone_i_pll,
+	testmode_i_pll,
+	scan_en_i_pll,
+	scan_i_pll,
+	scan_o_pll,
+	fll_req_i_pll,
+	fll_wrn_i_pll,
+	fll_add_i_pll,
+	fll_data_i_pll,
+	fll_ack_o_pll,
+	fll_r_data_o_pll,
+	fll_lock_o_pll,
+	clk_o_pll,
+	rstn_o_pll,
+	user_irq_pll,
+	io_oeb_pll,
+	io_out_pll,
+	wbs_ack_o_pll,
+	wbs_dat_o_pll,
+	la_data_out_pll,
+// MBA END
 	clk_i,
 	rst_n,
 	axi_spi_master_aw_addr,
@@ -183,6 +208,31 @@ module peripherals
 	inout wire vccd1;
 	inout wire vssd1;
 `endif
+// MBA START
+	input wire clk_i_pll;
+	input wire rstn_i_pll;
+	input wire clk_sel_i_pll;
+	input wire clk_standalone_i_pll;
+	input wire testmode_i_pll;
+	input wire scan_en_i_pll;
+	input wire scan_i_pll;
+	output wire scan_o_pll;
+	input wire fll_req_i_pll;
+	input wire fll_wrn_i_pll;
+	input wire [1:0] fll_add_i_pll;
+	input wire [31:0] fll_data_i_pll;
+	output wire fll_ack_o_pll;
+	output wire [31:0] fll_r_data_o_pll;
+	output wire fll_lock_o_pll;
+	output wire clk_o_pll;
+	output wire rstn_o_pll;	
+	output wire [2:0] user_irq_pll;
+	output wire [37:0] io_oeb_pll;
+	output wire [25:0] io_out_pll;
+	output wire wbs_ack_o_pll;
+	output wire [31:0] wbs_dat_o_pll;
+	output wire [63:0] la_data_out_pll;
+// MBA END
 	input wire clk_i;
 	input wire rst_n;
 	output wire [AXI_ADDR_WIDTH - 1:0] axi_spi_master_aw_addr;
@@ -437,6 +487,37 @@ module peripherals
 			);
 		end
 	endgenerate
+	
+
+// MBA START
+	clk_rst_gen clk_rst_gen_i(
+	.clk_i(clk_i_pll),
+	.rstn_i(rstn_i_pll),
+	.clk_sel_i(clk_sel_i_pll),
+	.clk_standalone_i(clk_standalone_i_pll),
+	.testmode_i(testmode_i_pll),
+	.scan_i(scan_i_pll),
+	.scan_o(scan_o_pll),
+	.scan_en_i(scan_en_i_pll),
+	.fll_req_i(fll_req_i_pll),
+	.fll_wrn_i(fll_wrn_i_pll),
+	.fll_add_i(fll_add_i_pll),
+	.fll_data_i(fll_data_i_pll),
+	.fll_ack_o(fll_ack_o_pll),
+	.fll_r_data_o(fll_r_data_o_pll),
+	.fll_lock_o(fll_lock_o_pll),
+	.clk_o(clk_o_pll),
+	.rstn_o(rstn_o_pll),
+	.user_irq(user_irq_pll),
+	.io_oeb(io_oeb_pll),
+	.io_out(io_out_pll),
+	.wbs_ack_o(wbs_ack_o_pll),
+	.wbs_dat_o(wbs_dat_o_pll),
+	.la_data_out(la_data_out_pll)
+	);
+// MBA END
+
+
 	axi_spi_slave_wrap #(
 		.AXI_ADDRESS_WIDTH(AXI_ADDR_WIDTH),
 		.AXI_DATA_WIDTH(AXI_DATA_WIDTH),

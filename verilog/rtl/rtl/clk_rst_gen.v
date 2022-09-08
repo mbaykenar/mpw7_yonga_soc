@@ -1,10 +1,10 @@
 //`define USE_POWER_PINS
 
 module clk_rst_gen (
-`ifdef USE_POWER_PINS
-	vccd1,	// User area 1 1.8V supply
-	vssd1,	// User area 1 digital ground
-`endif
+//`ifdef USE_POWER_PINS
+//	vccd1,	// User area 1 1.8V supply
+//	vssd1,	// User area 1 digital ground
+//`endif
 	clk_i,
 	rstn_i,
 	clk_sel_i,
@@ -32,10 +32,10 @@ wbs_dat_o,
 la_data_out
 // MBA END
 );
-`ifdef USE_POWER_PINS
-	inout wire vccd1;
-	inout wire vssd1;
-`endif
+//`ifdef USE_POWER_PINS
+//	inout wire vccd1;
+//	inout wire vssd1;
+//`endif
 	input wire clk_i;
 	input wire rstn_i;
 	input wire clk_sel_i;
