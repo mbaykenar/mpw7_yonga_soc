@@ -28,3 +28,4 @@ Peripheral connection is handled with peripherals macro. It's size is 700x2200 u
 Original SystemVerilog implementation of Yonga-MCU is verified through modelsim environment provided with pulpino repo. We converted SV files to Verilog through sv2v and reverified the MCU.
 
 ## GDSII Images
+![AXI_NODE_INTF_WRAP](https://github.com/mbaykenar/mpw7_yonga_soc/tree/main/images/axi_node_intf_wrap.PNG?raw=true)
