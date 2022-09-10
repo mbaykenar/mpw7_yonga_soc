@@ -29,3 +29,9 @@ Original SystemVerilog implementation of Yonga-MCU is verified through modelsim 
 
 ## GDSII Images
 ![alt text](https://github.com/mbaykenar/mpw7_yonga_soc/blob/main/images/axi_node_intf_wrap.PNG "axi_node_intf_wrap")
+
+![alt text](https://github.com/mbaykenar/mpw7_yonga_soc/blob/main/images/mba_core_region.PNG "mba_core_region")
+
+![alt text](https://github.com/mbaykenar/mpw7_yonga_soc/blob/main/images/peripherals.PNG "peripherals")
+
+![alt text](https://github.com/mbaykenar/mpw7_yonga_soc/blob/main/images/user_project_wrapper.PNG "user_project_wrapper")
