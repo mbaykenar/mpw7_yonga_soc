@@ -1,0 +1,80 @@
+module fpu_itof (
+	Operand_a_DI,
+	Sign_prenorm_DO,
+	Exp_prenorm_DO,
+	Mant_prenorm_DO
+);
+parameter C_RM            = 2;
+parameter C_RM_NEAREST    = 2'h0;
+parameter C_RM_TRUNC      = 2'h1;
+parameter C_RM_PLUSINF    = 2'h2;
+parameter C_RM_MINUSINF   = 2'h3;
+parameter C_PC            = 5;
+parameter C_OP            = 32;
+parameter C_MANT          = 23;
+parameter C_EXP           = 8;
+parameter C_BIAS          = 127;
+parameter C_HALF_BIAS     = 63;
+parameter C_LEADONE_WIDTH = 7;
+parameter C_MANT_PRENORM  = C_MANT+1;
+parameter C_EXP_ZERO      = 8'h00;
+parameter C_EXP_ONE       = 8'h01;
+parameter C_EXP_INF       = 8'hff;
+parameter C_MANT_ZERO     = 23'h0;
+parameter C_MANT_NAN      = 23'h400000;
+
+parameter C_CMD               = 4;
+parameter C_FPU_ADD_CMD       = 4'h0;
+parameter C_FPU_SUB_CMD       = 4'h1;
+parameter C_FPU_MUL_CMD       = 4'h2;
+parameter C_FPU_DIV_CMD       = 4'h3;
+parameter C_FPU_I2F_CMD       = 4'h4;
+parameter C_FPU_F2I_CMD       = 4'h5;
+parameter C_FPU_SQRT_CMD      = 4'h6;
+parameter C_FPU_NOP_CMD       = 4'h7;
+parameter C_FPU_FMADD_CMD     = 4'h8;
+parameter C_FPU_FMSUB_CMD     = 4'h9;
+parameter C_FPU_FNMADD_CMD    = 4'hA;
+parameter C_FPU_FNMSUB_CMD    = 4'hB;
+parameter C_RM_NEAREST_MAX = 3'h4;
+parameter C_EXP_PRENORM  = C_EXP+2;
+parameter C_MANT_ADDIN   = C_MANT+4;
+parameter C_MANT_ADDOUT  = C_MANT+5;
+parameter C_MANT_SHIFTIN = C_MANT+3;
+parameter C_MANT_SHIFTED = C_MANT+4;
+parameter C_MANT_INT     = C_OP-1;
+parameter C_INF          = 32'h7fffffff;
+parameter C_MINF         = 32'h80000000;
+parameter C_EXP_SHIFT    = C_EXP_PRENORM;
+parameter C_SHIFT_BIAS   = 9'd127;
+parameter C_UNKNOWN      = 8'd157;
+parameter C_PADMANT      = 16'b0;
+parameter C_MANT_NoHB_ZERO   = 23'h0;
+parameter C_MANT_PRENORM_IND = 6;
+parameter F_QNAN         =32'h7FC00000;
+	input wire [C_OP - 1:0] Operand_a_DI;
+	output wire Sign_prenorm_DO;
+	output wire signed [C_EXP_PRENORM - 1:0] Exp_prenorm_DO;
+	output wire [C_MANT_PRENORM - 1:0] Mant_prenorm_DO;
+	wire [C_OP - 1:0] Operand_a_D;
+	wire Sign_int_D;
+	wire Sign_prenorm_D;
+	wire [C_MANT_INT - 1:0] Mant_int_D;
+	wire [C_OP - 1:0] Temp_twos_to_unsigned_D;
+	wire [C_MANT_PRENORM - 1:0] Mant_prenorm_D;
+	wire Hb_a_D;
+	wire signed [C_EXP_PRENORM - 1:0] Exp_prenorm_D;
+	assign Operand_a_D = Operand_a_DI;
+	assign Sign_int_D = Operand_a_D[C_OP - 1];
+	assign Mant_int_D = Operand_a_D[C_MANT_INT - 1:0];
+	wire Twos_to_unsigned_zero;
+	assign Temp_twos_to_unsigned_D = ~Operand_a_D + 1'b1;
+	wire Twos_to_unsigned_zero_D;
+	assign Twos_to_unsigned_zero_D = ~(|Temp_twos_to_unsigned_D[C_MANT_INT - 1:0]);
+	assign Sign_prenorm_D = Sign_int_D;
+	assign Exp_prenorm_D = $signed({2'd0, C_UNKNOWN});
+	assign Mant_prenorm_D = (Sign_int_D ? {Twos_to_unsigned_zero_D, Temp_twos_to_unsigned_D[C_MANT_INT - 1:0], C_PADMANT} : {1'b0, Mant_int_D, C_PADMANT});
+	assign Sign_prenorm_DO = Sign_prenorm_D;
+	assign Exp_prenorm_DO = Exp_prenorm_D;
+	assign Mant_prenorm_DO = Mant_prenorm_D;
+endmodule
